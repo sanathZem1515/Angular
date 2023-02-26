@@ -11,7 +11,7 @@ export class RecipeListComponent implements OnInit {
     new Recipe(
       'A Test Recipe',
       'This is test',
-      'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.eatingwell.com%2Frecipe%2F7949991%2Fcucumber-sandwich%2F&psig=AOvVaw2vOj-keoqXsK1UlrJIFByQ&ust=1677526658866000&source=images&cd=vfe&ved=0CBAQjRxqFwoTCLCW6Pr3s_0CFQAAAAAdAAAAABAD'
+      'https://images.immediate.co.uk/production/volatile/sites/30/2022/10/Campfire-stew-afe40d7.jpg'
     ),
   ];
 
