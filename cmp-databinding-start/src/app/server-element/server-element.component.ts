@@ -36,8 +36,7 @@ export class ServerElementComponent
   ngOnInit(): void {
     console.log('ngOnInit Called!');
     console.log('Text content :',this.header.nativeElement.value);
-    console.log('Text Content of paragraph : ',this.paragraph.nativeElement.value);
-    
+    console.log('Text Content of paragraph : ',this.paragraph.nativeElement.value);  
   }
 
   ngDoCheck(): void {
