@@ -15,7 +15,7 @@ export class RecipeDetailComponent implements OnInit {
   constructor(
     private recipeService: RecipeService,
     private route: ActivatedRoute,
-    private router : Router
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -30,6 +30,6 @@ export class RecipeDetailComponent implements OnInit {
   }
 
   onEditRecipe() {
-    this.router.navigate(["edit"],{relativeTo:this.route})
+    this.router.navigate(['edit'], { relativeTo: this.route });
   }
 }

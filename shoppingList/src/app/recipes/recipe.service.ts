@@ -22,17 +22,17 @@ export class RecipeService {
     ),
   ];
 
-  constructor(private shoppingListService:ShoppingListService) {}
+  constructor(private shoppingListService: ShoppingListService) {}
 
   getRecipes() {
     return this.recipes.slice();
   }
 
-  getRecipe(id:number) {
+  getRecipe(id: number) {
     return this.recipes[id];
   }
 
-  addIngredientsToShoppingList(ingredients:Ingredient[]) {
+  addIngredientsToShoppingList(ingredients: Ingredient[]) {
     this.shoppingListService.addIngredients(ingredients);
   }
 }
