@@ -18,10 +18,10 @@ export class RecipeService {
       [new Ingredient('Meat', 1), new Ingredient('French Fries', 20)]
     ),
     new Recipe(
-      'A Test Recipe 2',
-      'This is test 2',
-      'https://images.immediate.co.uk/production/volatile/sites/30/2022/10/Campfire-stew-afe40d7.jpg',
-      [(new Ingredient('Buns', 2), new Ingredient('Meat', 1))]
+      'Spaghetti',
+      'Greatful',
+      'https://www.indianhealthyrecipes.com/wp-content/uploads/2022/07/mushroom-spaghetti-recipe.jpg',
+      [new Ingredient('Noodles', 25), new Ingredient('Meat', 100)]
     ),
   ];
 
