@@ -10,21 +10,18 @@ import { Subscription } from 'rxjs';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
-export class AppComponent implements OnInit,OnDestroy {
+export class AppComponent implements OnInit, OnDestroy {
   loadedPosts = [];
   isLoading = false;
   error = null;
-  private errorSub : Subscription;
+  private errorSub: Subscription;
 
   constructor(private http: HttpClient, private postService: PostsService) {}
 
   ngOnInit() {
-
-    this.errorSub = this.postService.error.subscribe(
-      (errorMessage) => {
-        this.error = errorMessage;
-      }
-    )
+    this.errorSub = this.postService.error.subscribe((errorMessage) => {
+      this.error = errorMessage;
+    });
     this.onFetchPosts();
   }
 
@@ -44,6 +41,7 @@ export class AppComponent implements OnInit,OnDestroy {
         this.loadedPosts = posts;
       },
       (error) => {
+        this.isLoading = false;
         this.error = error.message;
       }
     );
@@ -56,7 +54,11 @@ export class AppComponent implements OnInit,OnDestroy {
     });
   }
 
+  onHandleError() {
+    this.error = null;
+  }
+
   ngOnDestroy(): void {
-      this.errorSub.unsubscribe();
+    this.errorSub.unsubscribe();
   }
 }
