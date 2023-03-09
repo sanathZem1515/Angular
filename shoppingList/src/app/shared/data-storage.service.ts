@@ -17,4 +17,10 @@ export class DataStorageService implements OnInit {
         console.log(responseData);
     });
   }
+
+  fetchRecipes () {
+    return this.http.get<Recipe[]>(this.url).subscribe((recipes)=>{
+        this.recipeService.setRecipes(recipes);
+    });
+  }
 }
