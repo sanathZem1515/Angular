@@ -7,37 +7,36 @@ import { Post } from './post.model';
   providedIn: 'root',
 })
 export class PostsService {
-  constructor(private http:HttpClient) {}
+  constructor(private http: HttpClient) {}
 
-  createAndStorePost(title:string,content:string) {
+  url: string =
+    'https://np-complete-guide-38063-default-rtdb.firebaseio.com/posts.json';
 
-    const postData : Post = {title:title,content:content};
+  createAndStorePost(title: string, content: string) {
+    const postData: Post = { title: title, content: content };
 
     this.http
-      .post<{ name: string }>(
-        'https://np-complete-guide-38063-default-rtdb.firebaseio.com/posts.json',
-        postData
-      )
+      .post<{ name: string }>(this.url, postData)
       .subscribe((responseData) => {
         console.log(responseData);
       });
   }
 
   fetchPosts() {
-    return this.http
-      .get<{ [key: string]: Post }>(
-        'https://np-complete-guide-38063-default-rtdb.firebaseio.com/posts.json'
-      )
-      .pipe(
-        map((responseData) => {
-          const postArray: Post[] = [];
-          for (const key in responseData) {
-            if (responseData.hasOwnProperty(key)) {
-              postArray.push({ ...responseData[key], id: key });
-            }
+    return this.http.get<{ [key: string]: Post }>(this.url).pipe(
+      map((responseData) => {
+        const postArray: Post[] = [];
+        for (const key in responseData) {
+          if (responseData.hasOwnProperty(key)) {
+            postArray.push({ ...responseData[key], id: key });
           }
-          return postArray;
-        })
-      );
+        }
+        return postArray;
+      })
+    );
+  }
+
+  deletePosts() {
+    return this.http.delete(this.url);
   }
 }
