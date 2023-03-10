@@ -9,6 +9,8 @@ import { AuthService } from './auth.service';
 })
 export class AuthComponent implements OnInit {
   isLoginMode = true;
+  isLoading = false;
+  isError = null;
   @ViewChild('authForm') authForm: NgForm;
 
   constructor(private authService: AuthService) {}
@@ -27,12 +29,14 @@ export class AuthComponent implements OnInit {
     const email = this.authForm.value.email;
     const password = this.authForm.value.password;
 
+    this.isLoading = true;
     this.authService.signup(email, password).subscribe(
       (responseData) => {
-        console.log(responseData);
+        this.isLoading = false;
       },
       (error) => {
-        console.log(error);
+        this.isLoading = false;
+        this.isError = error.message;
       }
     );
 
