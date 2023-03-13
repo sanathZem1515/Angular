@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AlertComponent } from '../shared/alert/alert.component';
+import { PlaceholderDirective } from '../shared/placeholder/placeholder.directive';
 import { AuthResponseData, AuthService } from './auth.service';
 
 @Component({
@@ -15,6 +16,7 @@ export class AuthComponent implements OnInit {
   isLoading = false;
   isError = null;
   @ViewChild('authForm') authForm: NgForm;
+  @ViewChild(PlaceholderDirective,{static:false}) alertHost : PlaceholderDirective; 
 
   constructor(private authService: AuthService, private router: Router, private companyFactoryResover:ComponentFactoryResolver) {}
 
@@ -60,12 +62,20 @@ export class AuthComponent implements OnInit {
 
   onHandleError() {
     this.isError = null;
+
+    const hostViewContainerRef = this.alertHost.viewContainerRef;
+
+    hostViewContainerRef.clear();
+    
   }
 
   private showErrorAlert(message:string) {
     // const alertCmp = new AlertComponent(); // wont work since js is creating an instance not angular to make angular create we have to use component factory resolver
     const alertCmpFactory = this.companyFactoryResover.resolveComponentFactory(AlertComponent);
 
-    
+    const hostViewContainerRef = this.alertHost.viewContainerRef;
+
+    hostViewContainerRef.clear();
+    hostViewContainerRef.createComponent(alertCmpFactory);
   }
 }
