@@ -15,7 +15,7 @@ export class AuthComponent implements OnInit {
   isError = null;
   @ViewChild('authForm') authForm: NgForm;
 
-  constructor(private authService: AuthService,private router:Router) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit() {}
 
@@ -53,6 +53,10 @@ export class AuthComponent implements OnInit {
       }
     );
 
-    // this.authForm.reset();
+    this.authForm.reset();
+  }
+
+  onHandleError() {
+    this.isError = null;
   }
 }
