@@ -25,7 +25,7 @@ import { ShoppingListModule } from './shopping-list/shopping-list.module';
     AuthComponent,
     LoadingSpinnerComponent,
     AlertComponent,
-    PlaceholderDirective
+    PlaceholderDirective,
   ],
   imports: [
     BrowserModule,
@@ -34,7 +34,7 @@ import { ShoppingListModule } from './shopping-list/shopping-list.module';
     ReactiveFormsModule,
     HttpClientModule,
     RecipesModule,
-    ShoppingListModule
+    ShoppingListModule,
   ],
   providers: [
     ShoppingListService,
