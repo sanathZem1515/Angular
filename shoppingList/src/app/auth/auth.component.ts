@@ -1,7 +1,13 @@
-import { Component, ComponentFactoryResolver, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  ComponentFactoryResolver,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { AlertComponent } from '../shared/alert/alert.component';
 import { PlaceholderDirective } from '../shared/placeholder/placeholder.directive';
 import { AuthResponseData, AuthService } from './auth.service';
@@ -11,14 +17,20 @@ import { AuthResponseData, AuthService } from './auth.service';
   templateUrl: './auth.component.html',
   styleUrls: ['./auth.component.css'],
 })
-export class AuthComponent implements OnInit {
+export class AuthComponent implements OnInit, OnDestroy {
   isLoginMode = true;
   isLoading = false;
   isError = null;
   @ViewChild('authForm') authForm: NgForm;
-  @ViewChild(PlaceholderDirective,{static:false}) alertHost : PlaceholderDirective; 
+  @ViewChild(PlaceholderDirective, { static: false })
+  alertHost: PlaceholderDirective;
+  private closeSub: Subscription;
 
-  constructor(private authService: AuthService, private router: Router, private companyFactoryResover:ComponentFactoryResolver) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private companyFactoryResover: ComponentFactoryResolver
+  ) {}
 
   ngOnInit() {}
 
@@ -62,20 +74,30 @@ export class AuthComponent implements OnInit {
 
   onHandleError() {
     this.isError = null;
-
-    const hostViewContainerRef = this.alertHost.viewContainerRef;
-
-    hostViewContainerRef.clear();
-    
   }
 
-  private showErrorAlert(message:string) {
+  ngOnDestroy(): void {
+      if(this.closeSub) {
+        this.closeSub.unsubscribe();
+      }
+  }
+
+  private showErrorAlert(message: string) {
     // const alertCmp = new AlertComponent(); // wont work since js is creating an instance not angular to make angular create we have to use component factory resolver
-    const alertCmpFactory = this.companyFactoryResover.resolveComponentFactory(AlertComponent);
+    const alertCmpFactory =
+      this.companyFactoryResover.resolveComponentFactory(AlertComponent);
 
     const hostViewContainerRef = this.alertHost.viewContainerRef;
 
     hostViewContainerRef.clear();
-    hostViewContainerRef.createComponent(alertCmpFactory);
+    const componentRef = hostViewContainerRef.createComponent(alertCmpFactory);
+
+    componentRef.instance.message = message;
+    this.closeSub = componentRef.instance.close.subscribe(() => {
+      this.closeSub.unsubscribe();
+      hostViewContainerRef.clear();
+    });
   }
+
+
 }
