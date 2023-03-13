@@ -23,7 +23,7 @@ import { RecipesComponent } from './recipes.component';
     RouterModule,
     ReactiveFormsModule,
     RecipesRoutingModule,
-    SharedModule
+    SharedModule,
   ],
 })
 export class RecipesModule {}
