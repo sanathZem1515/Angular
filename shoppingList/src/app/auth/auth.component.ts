@@ -1,7 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ComponentFactoryResolver, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { AlertComponent } from '../shared/alert/alert.component';
 import { AuthResponseData, AuthService } from './auth.service';
 
 @Component({
@@ -15,7 +16,7 @@ export class AuthComponent implements OnInit {
   isError = null;
   @ViewChild('authForm') authForm: NgForm;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router, private companyFactoryResover:ComponentFactoryResolver) {}
 
   ngOnInit() {}
 
@@ -49,6 +50,7 @@ export class AuthComponent implements OnInit {
       },
       (errorMessage) => {
         this.isLoading = false;
+        this.showErrorAlert(errorMessage);
         this.isError = errorMessage;
       }
     );
@@ -58,5 +60,12 @@ export class AuthComponent implements OnInit {
 
   onHandleError() {
     this.isError = null;
+  }
+
+  private showErrorAlert(message:string) {
+    // const alertCmp = new AlertComponent(); // wont work since js is creating an instance not angular to make angular create we have to use component factory resolver
+    const alertCmpFactory = this.companyFactoryResover.resolveComponentFactory(AlertComponent);
+
+    
   }
 }
