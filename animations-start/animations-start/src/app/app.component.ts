@@ -1,4 +1,10 @@
-import { animate, state, style, transition, trigger } from "@angular/animations";
+import {
+  animate,
+  state,
+  style,
+  transition,
+  trigger,
+} from "@angular/animations";
 import { Component } from "@angular/core";
 
 @Component({
@@ -48,7 +54,18 @@ import { Component } from "@angular/core";
       ),
       transition("normal=>highlighted", animate(300)),
       transition("highlighted => normal", animate(800)),
-      transition("shrunken <=>*", animate(500)),
+      transition("shrunken <=>*", [
+        style({
+          "background-color": "orange",
+        }),
+        animate(
+          1000,
+          style({
+            borderRadius: "50px",
+          })
+        ),
+        animate(500),
+      ]),
     ]),
   ],
 })
