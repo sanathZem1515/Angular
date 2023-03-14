@@ -1,12 +1,12 @@
 import {
   HttpClient,
   HttpErrorResponse,
-  HttpResponse,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Subject, throwError } from 'rxjs';
+import { BehaviorSubject, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 import { User } from './user.model';
 
 export interface AuthResponseData {
@@ -26,10 +26,9 @@ export class AuthService {
 
   constructor(private http: HttpClient, private router: Router) {}
 
-  API_KEY = 'AIzaSyBKKq-1WLUldGZsUK_h88GJweFc8m6ft5Y';
 
   signup(email: string, password: string) {
-    const signUpUrl = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${this.API_KEY}`;
+    const signUpUrl = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${environment.firebaseAPIKey}`;
 
     return this.http
       .post<AuthResponseData>(signUpUrl, {
@@ -51,7 +50,7 @@ export class AuthService {
   }
 
   login(email: string, password: string) {
-    const signInUrl = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${this.API_KEY}`;
+    const signInUrl = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${environment.firebaseAPIKey}`;
 
     return this.http
       .post<AuthResponseData>(signInUrl, {
