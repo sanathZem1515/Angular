@@ -1,5 +1,5 @@
-import { state, style, trigger } from '@angular/animations';
-import { Component } from '@angular/core';
+import { state, style, trigger } from "@angular/animations";
+import { Component } from "@angular/core";
 
 @Component({
   selector: "app-root",
@@ -16,7 +16,7 @@ import { Component } from '@angular/core';
       state(
         "highlighted",
         style({
-          backgroundColor: "blue",
+          "background-color": "blue",
           transform: "translateX(100px)",
         })
       ),
@@ -29,5 +29,15 @@ export class AppComponent {
 
   onAdd(item) {
     this.list.push(item);
+  }
+
+  onDelete(item) {
+    this.list.splice(this.list.indexOf(item), 1);
+  }
+
+  onAnimate() {
+    this.state == "normal"
+      ? (this.state = "highlighted")
+      : (this.state = "normal");
   }
 }
