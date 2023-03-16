@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { Subject } from 'rxjs';
 import { Ingredient } from '../shared/ingredient.model';
 import { ShoppingListService } from '../shopping-list/shopping-list.service';
-import { ShoppingListReducerType } from '../shopping-list/store/shopping-list.reducer';
+import * as fromShoppingList from '../shopping-list/store/shopping-list.reducer';
 import { Recipe } from './recipe.model';
 import * as ShoppingListActions from './../shopping-list/store/shopping-list.actions';
 
@@ -32,7 +32,7 @@ export class RecipeService {
 
   constructor(
     private shoppingListService: ShoppingListService,
-    private store: Store<{ shoppingList: ShoppingListReducerType }>
+    private store: Store<fromShoppingList.AppState>
   ) {}
 
   getRecipes() {
