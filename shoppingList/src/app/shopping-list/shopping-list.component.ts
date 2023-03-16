@@ -4,6 +4,7 @@ import { Observable, Subscription } from 'rxjs';
 import { LogginService } from '../logging-routing.service';
 import { Ingredient } from '../shared/ingredient.model';
 import { ShoppingListService } from './shopping-list.service';
+import * as ShoppingListActions from './store/shopping-list.actions';
 import * as fromShoppingList from './store/shopping-list.reducer';
 
 @Component({
@@ -11,10 +12,10 @@ import * as fromShoppingList from './store/shopping-list.reducer';
   templateUrl: './shopping-list.component.html',
   styleUrls: ['./shopping-list.component.css'],
 })
-export class ShoppingListComponent implements OnInit,OnDestroy {
-  ingredients: Observable<{ingredients : Ingredient[]}>;
+export class ShoppingListComponent implements OnInit, OnDestroy {
+  ingredients: Observable<{ ingredients: Ingredient[] }>;
 
-  private subscription : Subscription;
+  private subscription: Subscription;
 
   constructor(
     private shoppingListService: ShoppingListService,
@@ -35,11 +36,11 @@ export class ShoppingListComponent implements OnInit,OnDestroy {
   }
 
   onEditItem(index: number) {
-    this.shoppingListService.startedEditing.next(index);
+    // this.shoppingListService.startedEditing.next(index);
+    this.store.dispatch(new ShoppingListActions.StartEdit(index));
   }
 
   ngOnDestroy(): void {
-      this.subscription.unsubscribe();
+    this.subscription.unsubscribe();
   }
-
 }
