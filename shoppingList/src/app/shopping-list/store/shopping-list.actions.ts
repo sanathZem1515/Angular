@@ -23,7 +23,7 @@ export class UpdateIngredient implements Action {
 
 export class DeleteIngredient implements Action {
   readonly type = DELETE_INGREDIENT;
-  constructor(public index: number) {}
+  constructor(public payload: number) {}
 }
 
 export type ShoppingListActions =
