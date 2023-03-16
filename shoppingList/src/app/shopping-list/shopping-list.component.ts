@@ -1,30 +1,45 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { Observable, Subscription } from 'rxjs';
 import { LogginService } from '../logging-routing.service';
 import { Ingredient } from '../shared/ingredient.model';
 import { ShoppingListService } from './shopping-list.service';
+import { ShoppingListReducerType } from './store/shopping-list.reducer';
 
 @Component({
   selector: 'app-shopping-list',
   templateUrl: './shopping-list.component.html',
   styleUrls: ['./shopping-list.component.css'],
 })
-export class ShoppingListComponent implements OnInit {
-  ingredients: Ingredient[];
+export class ShoppingListComponent implements OnInit,OnDestroy {
+  ingredients: Observable<ShoppingListReducerType>;
 
-  constructor(private shoppingListService: ShoppingListService,private loggingService:LogginService) {}
+  private subscription : Subscription;
+
+  constructor(
+    private shoppingListService: ShoppingListService,
+    private loggingService: LogginService,
+    private store: Store<{ shoppingList: ShoppingListReducerType }>
+  ) {}
 
   ngOnInit() {
-    this.ingredients = this.shoppingListService.getIngredients();
-    this.shoppingListService.ingredientsChanged.subscribe(
-      (ingredients: Ingredient[]) => {
-        this.ingredients = ingredients;
-      }
-    );
+    this.store.select('shoppingList');
+    // this.ingredients = this.shoppingListService.getIngredients();
+    // this.subscription = this.shoppingListService.ingredientsChanged.subscribe(
+    //   (ingredients: Ingredient[]) => {
+    //     this.ingredients = ingredients;
+    //   }
+    // );
 
-    this.loggingService.printLog("Hello from Shopping list component ngOnInit")
+    this.loggingService.printLog('Hello from Shopping list component ngOnInit');
   }
 
-  onEditItem(index : number) {
+  onEditItem(index: number) {
     this.shoppingListService.startedEditing.next(index);
   }
+
+  ngOnDestroy(): void {
+      this.subscription.unsubscribe();
+  }
+
 }

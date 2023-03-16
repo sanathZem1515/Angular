@@ -2,7 +2,11 @@ import { Action } from '@ngrx/store';
 import { Ingredient } from '../../shared/ingredient.model';
 import { AddIngredient, ADD_INGREDIENT } from './shopping-list.actions';
 
-const initialState = {
+export type ShoppingListReducerType = {
+  ingredients : Ingredient[]
+}
+
+const initialState : ShoppingListReducerType = {
   ingredients: [new Ingredient('Apples', 5), new Ingredient('Tomatoes', 10)],
 };
 
@@ -16,5 +20,7 @@ export function ShoppingListReducer(
         ...state,
         ingredients: [...state.ingredients, action.payload],
       };
+     default:
+      return state; 
   }
 }
