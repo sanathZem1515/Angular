@@ -11,5 +11,5 @@ const initialState : AuthReducerType = {
 };
 
 export function authReducer (state = initialState,actions:Action) {
-
+    return state;
 }
