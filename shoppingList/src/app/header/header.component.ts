@@ -28,7 +28,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-
     this.userSub = this.store
       .select('auth')
       .pipe(map((authState) => authState.user))
