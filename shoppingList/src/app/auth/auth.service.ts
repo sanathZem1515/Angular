@@ -53,14 +53,8 @@ export class AuthService {
   }
 
   login(email: string, password: string) {
-    const signInUrl = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${environment.firebaseAPIKey}`;
 
-    return this.http
-      .post<AuthResponseData>(signInUrl, {
-        email: email,
-        password: password,
-        returnSecureToken: true,
-      })
+
       .pipe(
         catchError(this.handleError),
         tap((resData) => {
